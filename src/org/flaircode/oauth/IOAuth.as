@@ -4,6 +4,7 @@ package org.flaircode.oauth
 	
 	import mx.rpc.AsyncToken;
 	
+	import org.iotashan.oauth.OAuthConsumer;
 	import org.iotashan.oauth.OAuthToken;
 
 	/**
@@ -14,6 +15,20 @@ package org.flaircode.oauth
 	 */	
 	public interface IOAuth
 	{
+		
+		/**
+		 * 
+		 * @param key Consumer Key
+		 * 
+		 */		
+		function set consumerKey(key:String):void;
+		
+		/**
+		 * 
+		 * @param secret Consumer secret
+		 * 
+		 */		
+		function set consumerSecret(secret:String):void
 		
 		/**
 		 * 
