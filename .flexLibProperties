@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+  <includeClasses>
+    <classEntry path="org.flaircode.oauth.IOAuth"/>
+    <classEntry path="org.flaircode.oauth.OAuth"/>
+    <classEntry path="org.flaircode.oauth.OAuthLoader"/>
+    <classEntry path="org.flaircode.oauth.OAuthUtil"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
