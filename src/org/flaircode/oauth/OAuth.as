@@ -105,11 +105,11 @@ package org.flaircode.oauth
 		
 		
 		
-		public function getAccessToken(url:String, requestToken:OAuthToken, pin:int):AsyncToken
+		public function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):AsyncToken
 		{
 			var asyncToken:AsyncToken = new AsyncToken();
 			
-			var r:OAuthRequest = new OAuthRequest("GET", url, {oauth_verifier:pin}, consumer, requestToken);
+			var r:OAuthRequest = new OAuthRequest("GET", url, requestParams, consumer, requestToken);
 			var req:URLRequest = new URLRequest(r.buildRequest(signature));
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, function(e:Event):void

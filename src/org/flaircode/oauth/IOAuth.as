@@ -4,13 +4,12 @@ package org.flaircode.oauth
 	
 	import mx.rpc.AsyncToken;
 	
-	import org.iotashan.oauth.OAuthConsumer;
 	import org.iotashan.oauth.OAuthToken;
 
 	/**
 	 * OAuth interface
 	 * @author soenkerohde
-	 * @see org.flairtweet.oauth.OAuth
+	 * @see org.flaircode.oauth.OAuth
 	 * 
 	 */	
 	public interface IOAuth
@@ -52,11 +51,11 @@ package org.flaircode.oauth
 		 * 
 		 * @param url for Twitter http://twitter.com/oauth/access_token
 		 * @param requestToken previously retrieved request token
-		 * @param pin 6 digit number the user has retrieved from the authorize page
+		 * @param requestParams additional parameters like oauth_verifier with pin for Twitter desktop clients
 		 * @return AsyncToken which will return result typed OAuthToken 
 		 * 
 		 */		
-		function getAccessToken(url:String, requestToken:OAuthToken, pin:int):AsyncToken;
+		function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):AsyncToken;
 		
 		/**
 		 * 
