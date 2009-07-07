@@ -1,8 +1,7 @@
 package org.flaircode.oauth
 {
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	
-	import mx.rpc.AsyncToken;
 	
 	import org.iotashan.oauth.OAuthToken;
 
@@ -32,11 +31,11 @@ package org.flaircode.oauth
 		/**
 		 * 
 		 * @param url for Twitter http://twitter.com/oauth/request_token
-		 * @return AsyncToken which will return result typed OAuthToken
+		 * @return URLLoader. Listen for Event.COMPLETE and transform result to OAuthToken with OAuthUtil.getTokenFromResponse(event.currentTarget.data as String);
 		 * @see org.iotashan.oauth.OAuthToken
 		 * 
 		 */		
-		function getRequestToken(url:String):AsyncToken;
+		function getRequestToken(url:String):URLLoader;
 		
 		/**
 		 * 
@@ -52,20 +51,20 @@ package org.flaircode.oauth
 		 * @param url for Twitter http://twitter.com/oauth/access_token
 		 * @param requestToken previously retrieved request token
 		 * @param requestParams additional parameters like oauth_verifier with pin for Twitter desktop clients
-		 * @return AsyncToken which will return result typed OAuthToken 
+		 * @return URLLoader. Listen for Event.COMPLETE and transform result to OAuthToken with OAuthUtil.getTokenFromResponse(event.currentTarget.data as String); 
 		 * 
 		 */		
-		function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):AsyncToken;
+		function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):URLLoader;
 		
 		/**
 		 * 
 		 * @param method GET,POST,UPDATE,DELETE
 		 * @param url for Twitter friends timeline and JSON result https://twitter.com/statuses/friends_timeline.json
-		 * @param accessToken
+		 * @param token
 		 * @param requestParams
 		 * @return
 		 * 
 		 */		
-		function buildRequest(method:String, url:String, accessToken:OAuthToken, requestParams:Object = null):URLRequest;
+		function buildRequest(method:String, url:String, token:OAuthToken, requestParams:Object = null):URLRequest;
 	}
 }

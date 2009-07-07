@@ -27,23 +27,23 @@ package org.flaircode.oauth
 			var result:OAuthToken = new OAuthToken();
 			
 			var params:Array = tokenResponse.split("&");
-			for (var i:int = 0; i < params.length; i++) {
-		        var param:String = params[i];
-		        var nameValue:Array = param.split("=");
-			  if (nameValue.length == 2) {
-		            switch (nameValue[0]) {
-		              case "oauth_token":
-		                result.key = nameValue[1];
-		                logger.debug("Key: " + result.key);
-		                break;
-		              case "oauth_token_secret":
-		                result.secret = nameValue[1];
-		                logger.debug("Secret: " + result.secret);
-		                break;
-		              defaut:
-		                logger.warn("Unknown param: " + param);
-		            }
-			  }
+			for each(var param:String in params)
+			{
+				var a:Array = param.split("=");
+				if(a.length == 2)
+				{
+					switch(a[0])
+					{
+						case "oauth_token":
+							result.key = a[1];
+							logger.debug("Key: " + result.key);
+							break;
+						case "oauth_token_secret":
+							result.secret = a[1];
+							logger.debug("Secret: " + result.secret);
+							break;
+					}
+				}
 			}
 			
 			return result;

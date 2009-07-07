@@ -1,15 +1,7 @@
 package org.flaircode.oauth
 {
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	
-	import mx.logging.ILogger;
-	import mx.logging.Log;
-	import mx.rpc.AsyncToken;
-	import mx.rpc.IResponder;
-	import mx.rpc.events.ResultEvent;
 	
 	import org.iotashan.oauth.OAuthConsumer;
 	import org.iotashan.oauth.OAuthRequest;
@@ -19,19 +11,27 @@ package org.flaircode.oauth
 	public class OAuth implements IOAuth
 	{
 		
-		private static const logger:ILogger = Log.getLogger("OAuth");
-		
 		private var signature:OAuthSignatureMethod_HMAC_SHA1 = new OAuthSignatureMethod_HMAC_SHA1();
 		
 		private var _consumerKey:String;
 		private var _consumerSecret:String;
 		private var _consumer:OAuthConsumer;
 		
+		/**
+		 * 
+		 * @param key Consumer Key
+		 * 
+		 */		
 		public function set consumerKey(key:String):void
 		{
 			_consumerKey = key;
 		}
 		
+		/**
+		 * 
+		 * @param secret Consumer Secret
+		 * 
+		 */		
 		public function set consumerSecret(secret:String):void
 		{
 			_consumerSecret = secret;
@@ -49,15 +49,30 @@ package org.flaircode.oauth
 			return _consumer;
 		}
 		
-		public function OAuth()
+		/**
+		 * constructor
+		 * 
+		 */		
+		public function OAuth(consumerKey:String = null, consumerSecret:String = null)
 		{
+			_consumerKey = consumerKey;
+			_consumerSecret = consumerSecret;
 		}
 		
-		public function buildRequest(method:String, url:String, accessToken:OAuthToken, requestParams:Object = null):URLRequest
+		/**
+		 * used to build OAuth authenticated calls
+		 * 
+		 * @param method GET, POST, DELETE, UPDATE
+		 * @param url
+		 * @param token After authenticatin the accessToken is expected here
+		 * @param requestParams
+		 * @return 
+		 * 
+		 */		
+		public function buildRequest(method:String, url:String, token:OAuthToken, requestParams:Object = null):URLRequest
 		{
-			var r:OAuthRequest = new OAuthRequest("GET", url, null, consumer, accessToken);
-			var req:URLRequest = new URLRequest(r.buildRequest(signature));
-			return req;
+			var request:OAuthRequest = new OAuthRequest(method, url, requestParams, consumer, token);
+			return new URLRequest(request.buildRequest(signature));
 		}
 		
 		/**
@@ -80,58 +95,27 @@ package org.flaircode.oauth
 		 * @return result is OAuthToken
 		 * 
 		 */		
-		public function getRequestToken(url:String):AsyncToken
+		public function getRequestToken(url:String):URLLoader
 		{
-			var asyncToken:AsyncToken = new AsyncToken();
-			
-			var r:OAuthRequest = new OAuthRequest("GET", url, null, consumer, null);
-			var req:URLRequest = new URLRequest(r.buildRequest(signature));
-			var loader:URLLoader = new URLLoader();
-			
-			loader.addEventListener(Event.COMPLETE, function(e:Event):void
-			{
-				var result:OAuthToken =  OAuthUtil.getTokenFromResponse(e.currentTarget.data as String);
-				var re:ResultEvent = new ResultEvent(ResultEvent.RESULT, false, true, result);
-				for each(var responder:IResponder in asyncToken.responders)
-				{
-					responder.result(re);
-				}
-				
-			});
-			
-			loader.load(req);
-			return asyncToken;
+			var oauthRequest:OAuthRequest = new OAuthRequest("GET", url, null, consumer, null);
+			var request:URLRequest = new URLRequest(oauthRequest.buildRequest(signature));
+			return new URLLoader(request);
 		}
 		
 		
-		
-		public function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):AsyncToken
+		/**
+		 * gets the AccessToken base on the requestToken
+		 *  
+		 * @param url
+		 * @param requestToken
+		 * @param requestParams additional parameters like oauth_verifier with pin for Twitter desktop clients
+		 * @return 
+		 * 
+		 */		
+		public function getAccessToken(url:String, requestToken:OAuthToken, requestParams:Object):URLLoader
 		{
-			var asyncToken:AsyncToken = new AsyncToken();
-			
-			var r:OAuthRequest = new OAuthRequest("GET", url, requestParams, consumer, requestToken);
-			var req:URLRequest = new URLRequest(r.buildRequest(signature));
-			var loader:URLLoader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, function(e:Event):void
-			{
-				var result:OAuthToken = OAuthUtil.getTokenFromResponse(e.currentTarget.data as String);
-				var re:ResultEvent = new ResultEvent(ResultEvent.RESULT, false, true, result);
-				for each(var responder:IResponder in asyncToken.responders)
-				{
-					responder.result(re);
-				}
-				
-			});
-			loader.addEventListener(IOErrorEvent.IO_ERROR, function(e:IOErrorEvent):void
-			{
-				for each(var resp:IResponder in asyncToken.responders)
-				{
-					resp.fault(null);
-				}
-			});
-			loader.load(req);
-			
-			return asyncToken;
+			var request:URLRequest = buildRequest("GET", url, requestToken, requestParams);
+			return new URLLoader(request);
 		}
 		
 	}
