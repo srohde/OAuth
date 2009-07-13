@@ -16,9 +16,6 @@
 
 package org.flaircode.oauth
 {
-	import mx.logging.ILogger;
-	import mx.logging.Log;
-	
 	import org.iotashan.oauth.OAuthToken;
 
 	/**
@@ -29,7 +26,7 @@ package org.flaircode.oauth
 	public class OAuthUtil
 	{
 		
-		private static const logger:ILogger = Log.getLogger("org.flairtweet.oauth.OAuthUtil");
+		//private static const logger:ILogger = Log.getLogger("org.flairtweet.oauth.OAuthUtil");
 		
 		/**
 		 * 
@@ -39,7 +36,7 @@ package org.flaircode.oauth
 		 */		
 		public static function getTokenFromResponse(tokenResponse:String):OAuthToken
 		{
-			logger.info("getTokenFromResponse " + tokenResponse);
+			//logger.info("getTokenFromResponse " + tokenResponse);
 			var result:OAuthToken = new OAuthToken();
 			
 			var params:Array = tokenResponse.split("&");
@@ -52,11 +49,11 @@ package org.flaircode.oauth
 					{
 						case "oauth_token":
 							result.key = a[1];
-							logger.debug("Key: " + result.key);
+							//logger.debug("Key: " + result.key);
 							break;
 						case "oauth_token_secret":
 							result.secret = a[1];
-							logger.debug("Secret: " + result.secret);
+							//logger.debug("Secret: " + result.secret);
 							break;
 					}
 				}

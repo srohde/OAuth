@@ -87,8 +87,10 @@ package org.flaircode.oauth
 		 */		
 		public function buildRequest(method:String, url:String, token:OAuthToken, requestParams:Object = null):URLRequest
 		{
-			var request:OAuthRequest = new OAuthRequest(method, url, requestParams, consumer, token);
-			return new URLRequest(request.buildRequest(signature));
+			var oauthRequest:OAuthRequest = new OAuthRequest(method, url, requestParams, consumer, token);
+			var request:URLRequest = new URLRequest(oauthRequest.buildRequest(signature));
+			request.method = method;
+			return request;
 		}
 		
 		/**
