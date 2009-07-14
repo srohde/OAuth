@@ -19,6 +19,7 @@ package org.flaircode.oauth
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import org.iotashan.oauth.OAuthConsumer;
 	import org.iotashan.oauth.OAuthToken;
 
 	/**
@@ -42,7 +43,14 @@ package org.flaircode.oauth
 		 * @param secret Consumer secret
 		 * 
 		 */		
-		function set consumerSecret(secret:String):void
+		function set consumerSecret(secret:String):void;
+		
+		/**
+		 * 
+		 * @return OAuthConsumer
+		 * 
+		 */		
+		function get consumer():OAuthConsumer;
 		
 		/**
 		 * 

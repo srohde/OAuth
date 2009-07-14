@@ -18,6 +18,7 @@ package org.flaircode.oauth
 {
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
 	
 	import org.iotashan.oauth.OAuthConsumer;
 	import org.iotashan.oauth.OAuthRequest;
@@ -53,7 +54,7 @@ package org.flaircode.oauth
 			_consumerSecret = secret;
 		}
 		
-		protected function get consumer():OAuthConsumer
+		public function get consumer():OAuthConsumer
 		{
 			if(_consumer == null)
 			{
@@ -88,7 +89,7 @@ package org.flaircode.oauth
 		public function buildRequest(method:String, url:String, token:OAuthToken, requestParams:Object = null):URLRequest
 		{
 			var oauthRequest:OAuthRequest = new OAuthRequest(method, url, requestParams, consumer, token);
-			var request:URLRequest = new URLRequest(oauthRequest.buildRequest(signature));
+			var request:URLRequest = new URLRequest(oauthRequest.buildRequest(signature, OAuthRequest.RESULT_TYPE_URL_STRING));
 			request.method = method;
 			return request;
 		}
