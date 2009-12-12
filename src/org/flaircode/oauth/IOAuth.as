@@ -92,6 +92,6 @@ package org.flaircode.oauth {
 		 * @return
 		 *
 		 */
-		function buildRequest( method : String, url : String, token : OAuthToken, requestParams : Object = null, removeParamsFromURL : Boolean = false ) : URLRequest;
+		function buildRequest( method : String, url : String, token : OAuthToken, requestParams : Object = null ) : URLRequest;
 	}
 }

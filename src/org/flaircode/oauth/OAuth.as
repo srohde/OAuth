@@ -82,29 +82,13 @@ package org.flaircode.oauth {
 		 * @return
 		 *
 		 */
-		public function buildRequest( method : String, url : String, token : OAuthToken, requestParams : Object = null, removeParamsFromURL : Boolean = false ) : URLRequest {
-			
-			// when requestParams are set and removeParamsFromURL is set to true store
-			// user params to remove them later from the generated URL
-			var removeFromURLText:String;
-			if ( requestParams != null && removeParamsFromURL ) {
-				removeFromURLText = "";
-				for ( var i : String in requestParams ) {
-					removeFromURLText += "&" + i + "=" + URLEncoding.encode( requestParams[ i ] )
-				}
-			}
-			
+		public function buildRequest( method : String, url : String, token : OAuthToken, requestParams : Object = null ) : URLRequest {
 			var oauthRequest:OAuthRequest = new OAuthRequest( method, url, requestParams, consumer, token );
 			if ( method == "DELETE" && Capabilities.playerType != "Desktop" ) {
 				method = URLRequestMethod.POST;
 			}
 			var request:URLRequest = new URLRequest( oauthRequest.buildRequest( signature, OAuthRequest.RESULT_TYPE_URL_STRING ) );
 			request.method = method;
-			
-			// remove userParams if existent
-			if ( removeFromURLText != null ) {
-				request.url = request.url.replace( removeFromURLText, "" );
-			}
 			
 			return request;
 		}
