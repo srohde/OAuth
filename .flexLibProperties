@@ -4,7 +4,6 @@
     <classEntry path="org.flaircode.oauth.IOAuth"/>
     <classEntry path="org.flaircode.oauth.OAuth"/>
     <classEntry path="org.flaircode.oauth.OAuthLoader"/>
-    <classEntry path="org.flaircode.oauth.OAuthUtil"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

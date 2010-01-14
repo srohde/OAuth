@@ -24,6 +24,7 @@ package org.flaircode.oauth {
 	import org.iotashan.oauth.OAuthRequest;
 	import org.iotashan.oauth.OAuthSignatureMethod_HMAC_SHA1;
 	import org.iotashan.oauth.OAuthToken;
+	import org.iotashan.utils.OAuthUtil;
 	import org.iotashan.utils.URLEncoding;
 	
 	public class OAuth implements IOAuth {
@@ -67,6 +68,7 @@ package org.flaircode.oauth {
 		 *
 		 */
 		public function OAuth( consumerKey : String = null, consumerSecret : String = null ) {
+			var forceCompile:OAuthUtil;
 			_consumerKey = consumerKey;
 			_consumerSecret = consumerSecret;
 		}
